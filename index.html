@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Diet Log · Charts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&family=Noto+Sans+Georgian:wght@400;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js?59"></script>
+</head>
+<body>
+  <header class="top">
+    <h1 id="title">Charts</h1>
+    <p id="period" class="sub">&nbsp;</p>
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+    <div class="chips" id="chips"></div>
+    <form class="dates" id="dates" hidden>
+      <label><span id="fromLabel">From</span><input type="date" id="from" required></label>
+      <label><span id="toLabel">To</span><input type="date" id="to" required></label>
+      <button type="submit" id="show">Show</button>
+    </form>
+  </header>
+
+  <main>
+    <div class="state" id="state" role="status" aria-live="polite"></div>
+    <section class="carousel" id="carousel" aria-roledescription="carousel"></section>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <div class="tip" id="tip" role="status" aria-live="polite" hidden></div>
+    <p class="hint" id="hint"></p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
