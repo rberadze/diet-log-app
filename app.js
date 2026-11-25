@@ -133,11 +133,32 @@
         svg.setAttribute("role", "img");
       }
       car.appendChild(card);
+      if (svg) fitText(svg);
       const dot = document.createElement("i");
       if (i === 0) dot.className = "on";
       $("dots").appendChild(dot);
     });
     car.scrollLeft = 0;
+  }
+
+  // Safety net: the server sizes text from measured font widths, but the phone's own fonts can still differ.
+  // Any text that runs past the chart's edge is shrunk to fit (measured by the browser, so it is exact).
+  function fitText(svg) {
+    const vb = svg.viewBox && svg.viewBox.baseVal;
+    if (!vb || !vb.width) return;
+    const edge = 6;
+    for (const t of svg.querySelectorAll("text")) {
+      let box;
+      try { box = t.getBBox(); } catch (_) { continue; }
+      if (!box.width) continue;
+      const anchor = t.getAttribute("text-anchor") || "start";
+      const x = parseFloat(t.getAttribute("x") || "0");
+      const room = anchor === "end" ? x - edge : anchor === "middle" ? 2 * Math.min(x - edge, vb.width - edge - x) : vb.width - edge - x;
+      if (room > 0 && box.width > room) {
+        const size = parseFloat(t.getAttribute("font-size") || "16");
+        t.setAttribute("font-size", String(Math.max(10, (size * room) / box.width)));
+      }
+    }
   }
 
   // dots follow the swipe
